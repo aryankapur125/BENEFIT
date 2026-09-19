@@ -742,12 +742,7 @@
       saveState(); render(); forceRepaint();
      },
      'toggle-save-lib'(ds, el){ el.classList.toggle('active'); },
-      const log = getDayLog(nutToday());
-      log[meal].push({ id: uid(), name, cals, protein, carbs, fat, qty: 1 });
-      if(saveLib) state.nutrition.library.push({ id: uid(), kind:'food', name, cals, protein, carbs, fat });
-      view.nutModal = null;
-      saveState(); render(); forceRepaint();
-
+    
     'open-create-meal'(ds){ view.mealBuilder = { components: [] }; view.nutModal = { type:'createMeal', meal: ds.meal }; render(); },
     'mb-add-component'(){
       const name = document.getElementById('mb-c-name').value.trim();
