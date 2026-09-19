@@ -742,7 +742,6 @@
       saveState(); render(); forceRepaint();
      },
      'toggle-save-lib'(ds, el){ el.classList.toggle('active'); },
-    
     'open-create-meal'(ds){ view.mealBuilder = { components: [] }; view.nutModal = { type:'createMeal', meal: ds.meal }; render(); },
     'mb-add-component'(){
       const name = document.getElementById('mb-c-name').value.trim();
