@@ -747,7 +747,6 @@
       if(saveLib) state.nutrition.library.push({ id: uid(), kind:'food', name, cals, protein, carbs, fat });
       view.nutModal = null;
       saveState(); render(); forceRepaint();
-    },
 
     'open-create-meal'(ds){ view.mealBuilder = { components: [] }; view.nutModal = { type:'createMeal', meal: ds.meal }; render(); },
     'mb-add-component'(){
