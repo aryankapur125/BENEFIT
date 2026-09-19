@@ -600,7 +600,7 @@
           <div class="form-field"><label>Carbs (g)</label><input id="nf-carbs" type="number" inputmode="decimal" placeholder="0"></div>
           <div class="form-field"><label>Fat (g)</label><input id="nf-fat" type="number" inputmode="decimal" placeholder="0"></div>
         </div>
-        <label class="lib-check-row"><input id="nf-save-lib" type="checkbox" checked> Save to my foods for next time</label>
+        <button type="button" class="seg-btn active" id="nf-save-lib-btn" data-action="toggle-save-lib" style="width:100%;margin:0 0 14px;">SAVE ITEM</button>
         <button class="btn-primary" data-action="save-custom-food">Add to ${mealLabel(meal)}</button>
       </div>
     </div>`;
@@ -734,7 +734,14 @@
       const protein = Number(document.getElementById('nf-protein').value) || 0;
       const carbs = Number(document.getElementById('nf-carbs').value) || 0;
       const fat = Number(document.getElementById('nf-fat').value) || 0;
-      const saveLib = document.getElementById('nf-save-lib').checked;
+      const saveLib = document.getElementById('nf-save-lib-btn').classList.contains('active');
+      const log = getDayLog(nutToday());
+      log[meal].push({ id: uid(), name, cals, protein, carbs, fat, qty: 1 });
+      if(saveLib) state.nutrition.library.push({ id: uid(), kind:'food', name, cals, protein, carbs, fat });
+      view.nutModal = null;
+      saveState(); render(); forceRepaint();
+     },
+     'toggle-save-lib'(ds, el){ el.classList.toggle('active'); },
       const log = getDayLog(nutToday());
       log[meal].push({ id: uid(), name, cals, protein, carbs, fat, qty: 1 });
       if(saveLib) state.nutrition.library.push({ id: uid(), kind:'food', name, cals, protein, carbs, fat });
@@ -867,7 +874,7 @@
       const btn = e.target.closest('[data-action]');
       if(!btn || !btn.dataset.action) return;
       const fn = actions[btn.dataset.action];
-      if(fn) fn(btn.dataset);
+      if(fn) fn(btn.dataset, btn);
     });
     root.addEventListener('input', (e) => {
       const el = e.target.closest('[data-bind]');
